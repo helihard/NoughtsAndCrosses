@@ -18,12 +18,12 @@ public class Board {
   }
 
   // error handling and input validation to be added
-  public void updateBoard(int squareNumber, String letter) {
+  public void updateBoard(int squareNumber, String marker) {
     int index = squareNumber -1;
     if (!this.squares[index].equals("-")) {
       System.out.println("Square already claimed by player");
     } else {
-      this.squares[index] = letter;
+      this.squares[index] = marker;
       printBoard();
     }
   }
