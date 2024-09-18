@@ -1,12 +1,11 @@
+import java.util.Arrays;
+
 public class Board {
-  private final char[] squares = {
-   '1', '2', '3',
-   '4', '5', '6',
-   '7', '8', '9'
-  };
+  private String[] squares = new String[9];
 
   // constructor
   public Board() {
+    Arrays.fill(this.squares, "-");
     printBoard();
   }
 
