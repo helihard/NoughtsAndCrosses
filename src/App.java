@@ -1,11 +1,13 @@
 public class App {
     public static void main(String[] args) throws Exception {
         Board board = new Board();
-        Player playerX = new Player("X");
-        Player playerO = new Player("O");
+        Player playerX = new Player("X", "X");
+        Player playerO = new Player("O", "O");
 
-        board.updateBoard(9, playerX.getMarker());
-        board.updateBoard(9, playerO.getMarker());
-        board.updateBoard(8, playerO.getMarker());
+        board.updateBoard(playerX.getMarker());
+        board.updateBoard(playerO.getMarker());
+        board.updateBoard(playerO.getMarker());
+
+        board.close();
     }
 }
