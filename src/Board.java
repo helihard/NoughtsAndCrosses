@@ -34,6 +34,7 @@ public class Board {
     System.out.println(" " + this.squares[6] + " | " + this.squares[7] + " | " + this.squares[8] + "\n");
   }
 
+  // error handling 
   public int getValidSquareNumber() {
     int number = - 1;
     boolean isValidInput = false;
@@ -50,6 +51,7 @@ public class Board {
         } else {
           isValidInput = true;
         }
+        // catches player input that isn't a number
       } catch (NumberFormatException e) {
         System.out.println("Invalid input. Please enter a valid number between 1 and 9.");
       }
@@ -57,9 +59,10 @@ public class Board {
     return number;
   }
 
-  public boolean isWinner(ArrayList<Integer> playerClaimedSquares) {
+  // check if the last claim results in a winning squares combination
+  public boolean isWinner(ArrayList<Integer> currentPlayersClaimedSquares) {
     for (List<Integer> combination : winningCombinations) {
-      if (playerClaimedSquares.containsAll(combination)) {
+      if (currentPlayersClaimedSquares.containsAll(combination)) {
         return true;
       }
     }
@@ -76,7 +79,7 @@ public class Board {
       // if current player is X, their array of claimed squares is to be updated, and vice versa
       ArrayList<Integer> currentPlayersClaimedSquares = isPlayerXsTurn ? playerXsClaimedSquares : playerOsClaimedSquares;
       
-      System.out.println("Player " + currentPlayer + ", which quare (1-9)?");
+      System.out.println("Player " + currentPlayer + ", which square (1-9)?");
 
       // gets valid square number from player's input
       int squareNumber = getValidSquareNumber();
