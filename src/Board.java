@@ -44,9 +44,10 @@ public class Board {
     return number;
   }
 
-  public void updateBoard(String marker) {
+  public void updateBoard(Player player) {
     int index = getValidSquareNumber() - 1;
-    this.squares[index] = marker;
+    this.squares[index] = player.getMarker();
+    player.addToClaimedSquares(index + 1);
     printBoard();
   }
 

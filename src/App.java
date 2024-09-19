@@ -4,9 +4,9 @@ public class App {
         Player playerX = new Player("X", "X");
         Player playerO = new Player("O", "O");
 
-        board.updateBoard(playerX.getMarker());
-        board.updateBoard(playerO.getMarker());
-        board.updateBoard(playerO.getMarker());
+        board.updateBoard(playerX);
+        board.updateBoard(playerO);
+        board.updateBoard(playerO);
 
         board.close();
     }
