@@ -93,20 +93,31 @@ public class Board {
 
       if (isWinner(currentPlayersClaimedSquares)) {
         System.out.println("Player " + currentPlayer + " wins the game!");
-        // takeTurns method exits
-        break;
+        reset();
       }
 
       // if all squares are claimed and the above method has not returned true, i e there is no winner
       if (playerXsClaimedSquares.size() + playerOsClaimedSquares.size() == 9) {
         System.out.println("Game ends in a draw!");
-        // takeTurns method exits
-        break;
+        reset();
       }
 
       // if there is neither winner nor draw, the next player is in turn to claim a square
       isPlayerXsTurn = !isPlayerXsTurn;
     }
+  }
+
+  public void reset() {
+    System.out.println("\nLet\'s try again!\n");
+    playerXsClaimedSquares.clear();
+    playerOsClaimedSquares.clear();
+
+    for (int i = 0; i < this.squares.length; i++) {
+      squares[i] = String.valueOf(i + 1);
+    }
+
+    printBoard();
+    takeTurns();
   }
 
   public void close() {
