@@ -1,9 +1,13 @@
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
 
 public class Board {
   private Scanner scanner;
   private String[] squares = new String[9];
+
+  private ArrayList<Integer> playerXsClaimedSquares = new ArrayList<>();
+  private ArrayList<Integer> playerOsClaimedSquares = new ArrayList<>();
 
   // constructor
   public Board() {
@@ -25,7 +29,6 @@ public class Board {
     boolean isValidInput = false;
 
     while(!isValidInput) {
-      System.out.println("Enter a number between 1 and 9: ");
       String input = scanner.nextLine().trim();
 
       try {
@@ -33,7 +36,7 @@ public class Board {
         if (number < 1 || number > 9) {
           System.out.println("Invalid input. Please enter a number between 1 and 9.");
         } else if (!this.squares[number - 1].equals("-")) {
-          System.out.println("Square already claimed by player. Please choose another square.");
+          System.out.println("Square already claimed. Please choose another square.");
         } else {
           isValidInput = true;
         }
@@ -44,11 +47,31 @@ public class Board {
     return number;
   }
 
-  public void updateBoard(Player player) {
-    int index = getValidSquareNumber() - 1;
-    this.squares[index] = player.getMarker();
-    player.addToClaimedSquares(index + 1);
-    printBoard();
+  public void takeTurns() {
+    // player X lays first claim of the game
+    boolean isPlayerXsTurn = true;
+
+    while (true) {
+      // if current player is X, the marker to be added to the board is "X", and vice versa
+      String currentPlayer = isPlayerXsTurn ? "X" : "O";
+      // if current player is X, their array of claimed squares is to be updated, and vice versa
+      ArrayList<Integer> currentPlayersClaimedSquares = isPlayerXsTurn ? playerXsClaimedSquares : playerOsClaimedSquares;
+      
+      System.out.println("Player " + currentPlayer + ", which quare (1-9)?");
+
+      // gets valid square number from player's input
+      int squareNumber = getValidSquareNumber();
+      // the corresponding value ("-") in the squares array is replaced with the current player's marker
+      squares[squareNumber - 1] = currentPlayer;
+      // adds the now claimed square to the current player's list of claimed square
+      currentPlayersClaimedSquares.add(squareNumber);
+
+      // print updated board
+      printBoard();
+
+      // if player X has now claimed a square, it is player O's turn next, and vice versa
+      isPlayerXsTurn = !isPlayerXsTurn;
+    }
   }
 
   public void close() {
