@@ -1,4 +1,6 @@
+import java.util.Arrays;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class Board {
@@ -7,6 +9,16 @@ public class Board {
 
   private ArrayList<Integer> playerXsClaimedSquares = new ArrayList<>();
   private ArrayList<Integer> playerOsClaimedSquares = new ArrayList<>();
+
+  private final List<List<Integer>> winningCombinations = Arrays.asList(
+    // horisontal combinations (forward or reversed)
+    Arrays.asList(1, 2, 3), Arrays.asList(4, 5, 6), Arrays.asList(7, 8, 9),
+    // vertical combinations (forward or reversed)
+    Arrays.asList(1, 4, 7), Arrays.asList(2, 5, 8), Arrays.asList(3, 6, 9),
+    // diagonal combinations (upwards down or reversed)
+    Arrays.asList(1, 5, 9), Arrays.asList(3, 5, 7)
+  );
+
 
   // constructor
   public Board() {
@@ -45,6 +57,15 @@ public class Board {
     return number;
   }
 
+  public boolean isWinner(ArrayList<Integer> playerClaimedSquares) {
+    for (List<Integer> combination : winningCombinations) {
+      if (playerClaimedSquares.containsAll(combination)) {
+        return true;
+      }
+    }
+    return false;
+  }
+
   public void takeTurns() {
     // player X lays first claim of the game
     boolean isPlayerXsTurn = true;
@@ -59,7 +80,7 @@ public class Board {
 
       // gets valid square number from player's input
       int squareNumber = getValidSquareNumber();
-      // the corresponding value ("-") in the squares array is replaced with the current player's marker
+      // the corresponding value (1-9) in the squares array is replaced with the current player's marker ("X" or "O")
       squares[squareNumber - 1] = currentPlayer;
       // adds the now claimed square to the current player's list of claimed square
       currentPlayersClaimedSquares.add(squareNumber);
@@ -67,7 +88,20 @@ public class Board {
       // print updated board
       printBoard();
 
-      // if player X has now claimed a square, it is player O's turn next, and vice versa
+      if (isWinner(currentPlayersClaimedSquares)) {
+        System.out.println("Player " + currentPlayer + " wins the game!");
+        // takeTurns method exits
+        break;
+      }
+
+      // if all squares are claimed and the above method has not returned true, i e there is no winner
+      if (playerXsClaimedSquares.size() + playerOsClaimedSquares.size() == 9) {
+        System.out.println("Game ends in a draw!");
+        // takeTurns method exits
+        break;
+      }
+
+      // if there is neither winner nor draw, the next player is in turn to claim a square
       isPlayerXsTurn = !isPlayerXsTurn;
     }
   }
