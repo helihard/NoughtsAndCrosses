@@ -1,10 +1,9 @@
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Scanner;
 
 public class Board {
   private Scanner scanner;
-  private String[] squares = new String[9];
+  private String[] squares = new String[]{"1", "2", "3", "4", "5", "6", "7", "8", "9"};
 
   private ArrayList<Integer> playerXsClaimedSquares = new ArrayList<>();
   private ArrayList<Integer> playerOsClaimedSquares = new ArrayList<>();
@@ -12,7 +11,6 @@ public class Board {
   // constructor
   public Board() {
     this.scanner = new Scanner(System.in);
-    Arrays.fill(this.squares, "-");
     printBoard();
   }
 
@@ -35,7 +33,7 @@ public class Board {
         number = Integer.parseInt(input);
         if (number < 1 || number > 9) {
           System.out.println("Invalid input. Please enter a number between 1 and 9.");
-        } else if (!this.squares[number - 1].equals("-")) {
+        } else if (this.squares[number - 1].equals("X") || this.squares[number -1].equals("O")) {
           System.out.println("Square already claimed. Please choose another square.");
         } else {
           isValidInput = true;
