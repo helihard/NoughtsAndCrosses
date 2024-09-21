@@ -1,9 +1,13 @@
+import java.util.Scanner;
+
 public class App {
     public static void main(String[] args) throws Exception {
-        Game game = new Game();
+        Scanner scanner = new Scanner(System.in);
+        Board board = new Board();
+        Game game = new Game(scanner, board);
         
         game.takeTurns();
 
-        game.close();
+        scanner.close();
     }
 }

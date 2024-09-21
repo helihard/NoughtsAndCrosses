@@ -19,9 +19,9 @@ public class Game {
     Arrays.asList(1, 5, 9), Arrays.asList(3, 5, 7)
   );
 
-  public Game() {
-    this.scanner = new Scanner(System.in);
-    this.board = new Board();
+  public Game(Scanner scanner, Board board) {
+    this.scanner = scanner;
+    this.board = board;
   }
 
   // error handling 
@@ -110,8 +110,4 @@ public class Game {
     board.printBoard();
     takeTurns();
   }
-
-  public void close() {
-    scanner.close();
-  } 
 }
